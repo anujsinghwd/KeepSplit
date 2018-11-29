@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-//onSubmit={this.addNote.bind(this)}
 class AddExpenseForm extends Component {
-
   onSubmit(event)
   {
     event.preventDefault();
@@ -41,7 +39,7 @@ class AddExpenseForm extends Component {
                     <label htmlFor="textarea">Amonut</label>
                   </div>
                 </div>
-                <button type="submit" className="waves-effect waves-light btn amber darken-4">Add Note</button>
+                <button type="submit" className="waves-effect waves-light btn amber darken-4">Add Expense</button>
                 </form>
               </div>
             </div>

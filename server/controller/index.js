@@ -1,20 +1,20 @@
-const expense = require('../model/index');
+const expenses = require('../model/index');
 
 var add = (req) => {
   let response;
   let status;
   if(req.body.title && req.body.amount && req.body.name)
   {
-      var note = notes.add(req.body.title, req.body.amount, req.body.name);
-      if(note)
+      var expense = expenses.add(req.body.title, req.body.name, req.body.amount);
+      if(expense)
       {
         status = 201;
-        response = {"status": 201, "message": "notes created successfully"};
+        response = {"status": 201, "message": "Expense added successfully", "data": expense};
       }
       else
       {
         status = 400;
-        response = {"status": 400, "message": "Note already exists"};
+        response = {"status": 400, "message": "Expense already exists"};
       }
   }
   else
@@ -31,16 +31,16 @@ var read = (req) => {
   if(req.body.title)
   {
 
-      var note = notes.get(req.body.title);
-      if(note)
+      var expense = expenses.get(req.body.title);
+      if(expense)
       {
         status = 200;
-        response = {"status": 200 ,"data": note};
+        response = {"status": 200 ,"data": expense};
       }
       else
       {
         status = 400;
-        response = {"status": 400, "message": "Note not found"};
+        response = {"status": 400, "message": "Expense not found"};
       }
   }
   else
@@ -54,16 +54,16 @@ var read = (req) => {
 var read_all = (req) => {
   let response;
   let status;
-  var notesList = notes.getAll();
-  if(notesList)
+  var expensesList = expenses.getAll();
+  if(expensesList)
   {
     status = 200;
-    response = {"status": 200 ,"data": notesList};
+    response = {"status": 200 ,"data": expensesList};
   }
   else
   {
     status = 400;
-    response = {"status": 400, "message": "Notes not found"};
+    response = {"status": 400, "message": "Expense not found"};
   }
   return [status, response];
 }
@@ -73,16 +73,16 @@ var remove = (req) => {
   let status;
   if(req.body.title)
   {
-      var note = notes.remove(req.body.title);
-      if(note)
+      var expense = expenses.remove(req.body.title);
+      if(expense)
       {
         status = 200;
-        response = {"status": 200 ,"message": "note removed successfully"};
+        response = {"status": 200 ,"message": "Expense removed successfully"};
       }
       else
       {
         status = 400;
-        response = {"status": 400, "message": "Note not found"};
+        response = {"status": 400, "message": "Expense not found"};
       }
   }
   else

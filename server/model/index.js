@@ -1,65 +1,61 @@
 const fs = require('fs');
+const uuidv4 = require('uuid/v4');
 
-var fetchNotes = () => {
+var fetch = () => {
     try{
-        var notesString = fs.readFileSync('notes-data.json');
-        return JSON.parse(notesString);
+        var expensesString = fs.readFileSync('expenses-data.json');
+        return JSON.parse(expensesString);
     } catch (e) {
         return [];
     }
 };
 
-var saveNotes = (notes) => {
-    fs.writeFileSync('notes-data.json', JSON.stringify(notes));
+var save = (expenses) => {
+    fs.writeFileSync('expenses-data.json', JSON.stringify(expenses));
 };
 
-var add = (title, body, img_src) => {
-    var notes = fetchNotes();
+var add = (title, name, amount) => {
+    let id = uuidv4();
+    var expenses = fetch();
     var d = new Date();
     var timestamp = d.getFullYear()+"-"+d.getMonth()+"-"+d.getDate()+" "+d.getHours()+":"+d.getMinutes();
-    var note = {
+    var expense = {
+        id,
         title,
-        body,
-        img_src,
+        name,
+        amount,
         timestamp
     };
 
-    var duplicateNotes = notes.filter((note) => note.title === title);
+    var duplicateExpenses = expenses.filter((expense) => expense.title === title);
 
-    if(duplicateNotes.length === 0) {
-        notes.push(note);
-        saveNotes(notes);
-        return note;
+    if(duplicateExpenses.length === 0) {
+        expenses.push(expense);
+        save(expenses);
+        return expense;
     }
 };
 
 var getAll = () => {
-    return fetchNotes();
+    return fetch();
 }
 
 var get = (title) => {
-    var notes = fetchNotes();
-    var filteredNotes = notes.filter((note) => note.title === title );
-    return filteredNotes[0];
+    var expenses = fetch();
+    var filteredExpenses = expenses.filter((expense) => expense.title === title );
+    return filteredExpenses[0];
 }
 
 var remove = (title) => {
-    var notes = fetchNotes();
-    var filteredNotes = notes.filter((note) => note.title !== title);
-    saveNotes(filteredNotes);
-    return notes.length !== filteredNotes.length;
+    var expenses = fetch();
+    var filteredExpenses = expenses.filter((expense) => expense.title !== title);
+    save(filteredExpenses);
+    return expenses.length !== filteredExpenses.length;
 }
 
-var logNote = (note) => {
-    console.log('----');
-    console.log(`Title: ${note.title}`);
-    console.log(`Body: ${note.body}`);
-};
-
 module.exports = {
-    addNote,
+    add,
     getAll,
-    getNote,
-    removeNote,
-    logNote
+    get,
+    remove
 }

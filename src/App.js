@@ -4,6 +4,7 @@ import 'react-notifications/lib/notifications.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import Header from './components/Header';
 import Expenses from './components/Expenses';
+
 import AddExpenseForm from './components/AddExpenseForm';
 const API_URL = "http://localhost:5000/apis/keepsplit";
 
@@ -20,6 +21,25 @@ class App extends Component {
 
   componentDidMount(){
     this.getNotes();
+  }
+
+  settle()
+  {
+    let finalURL = `${API_URL}/settle`;
+    fetch(finalURL)
+    .then((res) => res.json())
+    .then((data) => {
+      alert(JSON.stringify(data));
+      if(data['status'] === 200)
+      {
+        console.log(data);
+      }
+      else
+      {
+        //NotificationManager.warning(data['message'],'WARNING',  3000);
+      }
+    })
+   .catch((error) => console.log('There was a problem in fetching data '+error));
   }
 
   getNotes()
@@ -51,7 +71,7 @@ class App extends Component {
         {
            'Accept': 'application/json',
            'Content-Type': 'application/json',
-  
+
         },
         body: JSON.stringify({title: title, name: name, amount: amount})
       })
@@ -92,11 +112,12 @@ class App extends Component {
     }
     return (
       <div>
-        <Header />
+        <Header settleAmount={this.settle.bind(this)} />
         <AddExpenseForm add={this.addExpense.bind(this)}/>
         <ul className="collection">
             {expenses}
         </ul>
+        
         <NotificationContainer/>
       </div>
     );

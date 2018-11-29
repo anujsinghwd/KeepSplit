@@ -27,11 +27,23 @@ class AddExpenseForm extends Component {
                   </div>
                 </div>
 
-                <div className="row">
+                {/* <div className="row">
                   <div className="input-field col s12">
                     <textarea id="body" ref="name" className="materialize-textarea"></textarea>
                     <label htmlFor="textarea">Your Name</label>
                   </div>
+                </div> */}
+
+                 <div className="row">
+                 <label>Person Name</label>
+                <select ref="name" className="browser-default">
+                  <option value="" disabled>Choose your option</option>
+                  <option value="deepak">deepak</option>
+                  <option value="salman">salman</option>
+                  <option value="anuj">anuj</option>
+                  <option value="rj">rj</option>
+                  <option value="sharma">sharma</option>
+                </select>
                 </div>
 
                 <div className="row">

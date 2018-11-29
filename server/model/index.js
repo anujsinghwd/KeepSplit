@@ -1,5 +1,6 @@
 const fs = require('fs');
 const uuidv4 = require('uuid/v4');
+//const db = require('../database/index');
 
 var fetch = () => {
     try{
@@ -28,8 +29,9 @@ var add = (title, name, amount) => {
     };
 
     var duplicateExpenses = expenses.filter((expense) => expense.title === title);
+    var duplicateNames = expenses.filter((expense) => expense.name === name);
 
-    if(duplicateExpenses.length === 0) {
+    if(duplicateExpenses.length === 0 || duplicateNames.length === 0) {
         expenses.push(expense);
         save(expenses);
         return expense;

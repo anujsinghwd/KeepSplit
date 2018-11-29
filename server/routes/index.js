@@ -22,4 +22,9 @@ router.get('/getAllExpenses', function(req, res){
     return res.status(response[0]).send(response[1]);
 });
 
+router.get('/settle', function(req, res){
+    let response = expenses.settle(req);
+    return res.status(200).send(response);
+});
+
 module.exports = router;

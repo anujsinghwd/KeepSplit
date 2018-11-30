@@ -176,10 +176,22 @@ var splitPayments = (payments) => {
   return response_sum;
 }
 
+var create_user = (req) => {
+  let response;
+  let status;
+  console.log('test-2');
+  var expense = expenses.createUser(req.body.name, req.body.password);
+  if(req.body.name && req.body.password)
+  {
+    var expense = expenses.createUser(req.body.name, req.body.password);
+  }
+}
+
 module.exports = {
     remove,
     add,
     read,
     read_all,
-    settle
+    settle,
+    create_user
 }

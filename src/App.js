@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'react-notifications/lib/notifications.css';
+import 'react-table/react-table.css';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import Header from './components/Header';
 import Expenses from './components/Expenses';
-
 import AddExpenseForm from './components/AddExpenseForm';
 const API_URL = "http://localhost:5000/apis/keepsplit";
-
-//delete_note={this.deleteNotes.bind(this)}
 
 class App extends Component {
 
@@ -36,7 +34,7 @@ class App extends Component {
       }
       else
       {
-        //NotificationManager.warning(data['message'],'WARNING',  3000);
+        NotificationManager.warning(data['message'],'WARNING',  3000);
       }
     })
    .catch((error) => console.log('There was a problem in fetching data '+error));

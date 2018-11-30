@@ -27,4 +27,10 @@ router.get('/settle', function(req, res){
     return res.status(200).send(response);
 });
 
+router.post('/createUser', function(req, res){
+    console.log('test-1');
+    let response = expenses.create_user(req);
+    //return res.status(response[0]).send(response[1]);
+});
+
 module.exports = router;

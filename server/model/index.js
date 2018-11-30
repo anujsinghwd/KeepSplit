@@ -1,6 +1,8 @@
 const fs = require('fs');
 const uuidv4 = require('uuid/v4');
-//const db = require('../database/index');
+let UserModel = require('../database/schema/users');
+
+require('../database/index');
 
 var fetch = () => {
     try{
@@ -28,12 +30,14 @@ var add = (title, name, amount) => {
         timestamp
     };
 
-    var duplicateExpenses = expenses.filter((expense) => expense.title === title);
-    var duplicateNames = expenses.filter((expense) => expense.name === name);
+    /* 
+        var duplicateExpenses = expenses.filter((expense) => expense.title === title);
+        var duplicateNames = expenses.filter((expense) => expense.name === name);
 
-    // if(duplicateExpenses.length === 0 || duplicateNames.length === 0) {
-        
-    // }
+        if(duplicateExpenses.length === 0 || duplicateNames.length === 0) {
+            
+        }
+    */
     expenses.push(expense);
     save(expenses);
     return expense;
@@ -41,6 +45,22 @@ var add = (title, name, amount) => {
 
 var getAll = () => {
     return fetch();
+}
+
+var createUser = (name, password) => {
+    console.log('test-3');
+    let user = new UserModel({
+        name: name,
+        password: password
+    });
+
+    user.save()
+    .then(doc => {
+        console.log(doc)
+    })
+    .catch(err => {
+        console.error(err)
+    })     
 }
 
 var get = (title) => {
@@ -60,5 +80,6 @@ module.exports = {
     add,
     getAll,
     get,
-    remove
+    remove,
+    createUser
 }

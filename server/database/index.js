@@ -1,28 +1,23 @@
-const mysql = require('mysql');
+let mongoose = require('mongoose');
+const server = "<user>:<password>@ds119164.mlab.com:19164";
+const database = 'keepsplit_dev';  
+let UserModel = require('./schema/users');
 
-const connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'mmi@12345',
-  database : 'split'
-});
+class Database {
+  constructor() 
+  {
+    this._connect();
+  }
 
-connection.connect(function(err) {
-    if (err){
-      console.error('error connecting: ' + err.stack);
-      return;
-    }
-    console.log('connected as id ' + connection.threadId);
-});
+  _connect() {
+      mongoose.connect(`mongodb://${server}/${database}`)
+        .then(() => {
+          console.log('Database connection successful');
+        })
+        .catch(err => {
+          console.error('Database connection error'+err);
+        })
+  }
+}
 
-// var read = (query) => {
-//   connection.query(query, function (error, results) {
-//     connection.end();
-//     if (error) throw error;
-//     console.log(results);
-//   });
-// };
-
-module.exports = {
-  connection
-};
+module.exports = new Database();
